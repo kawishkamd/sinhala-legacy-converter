@@ -1,290 +1,274 @@
-body {
-    font-family: "IBM Plex Mono", "Fira Code", "Courier New", monospace;
-    line-height: 1.65;
-    margin: 0;
-    min-height: 100vh;
-    padding: 48px 24px;
-    background: radial-gradient(circle at 15% -10%, #ff7b00 0%, rgba(255, 123, 0, 0) 45%),
-                radial-gradient(circle at 85% 0%, #ffb347 0%, rgba(255, 179, 71, 0) 40%),
-                linear-gradient(135deg, #020202 0%, #090301 50%, #000000 100%);
-    color: #f9e6cb;
-    overflow-x: hidden;
+:root {
+    --bg-primary: #1a1c1f;
+    --bg-secondary: #22252b;
+    --bg-tertiary: #2c3036;
+    --text-primary: #f1f1f1;
+    --text-secondary: #c5cbd4;
+    --accent: #f07f28;
+    --accent-hover: #ffa156;
+    --border-soft: rgba(255, 255, 255, 0.08);
+    --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    font-size: 16px;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background:
-        repeating-linear-gradient(90deg, rgba(255, 108, 0, 0.06) 0, rgba(255, 108, 0, 0.06) 1px, transparent 1px, transparent 120px),
-        repeating-linear-gradient(0deg, rgba(255, 108, 0, 0.04) 0, rgba(255, 108, 0, 0.04) 1px, transparent 1px, transparent 120px);
-    mix-blend-mode: screen;
-    opacity: 0.6;
-    z-index: 0;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px 20px 60px;
+    background: radial-gradient(circle at top, rgba(240, 127, 40, 0.08), transparent 45%), var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .container {
-    position: relative;
-    max-width: 880px;
-    margin: 0 auto;
-    background: rgba(6, 3, 0, 0.8);
-    padding: 40px 36px 44px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 135, 0, 0.5);
-    box-shadow: 0 18px 60px rgba(255, 119, 0, 0.18), inset 0 0 0 1px rgba(255, 180, 90, 0.12);
+    width: min(840px, 100%);
+    background: linear-gradient(155deg, var(--bg-secondary) 0%, #1f2126 55%, var(--bg-tertiary) 100%);
+    padding: 36px clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-soft);
     backdrop-filter: blur(6px);
-    z-index: 1;
+    position: relative;
+    overflow: hidden;
 }
 
 .container::before {
     content: "";
     position: absolute;
-    inset: 14px;
-    border-radius: 14px;
-    border: 1px dashed rgba(255, 146, 0, 0.3);
+    inset: 0;
     pointer-events: none;
+    background: linear-gradient(135deg, rgba(240, 127, 40, 0.18), transparent 45%);
+    opacity: 0.6;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
 }
 
 h1 {
-    color: #ffa94d;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.32rem;
-    margin: 0 0 12px;
-    font-size: clamp(1.9rem, 3vw, 2.4rem);
-    text-shadow: 0 0 12px rgba(255, 153, 0, 0.35);
-}
-
-p {
-    color: #ffdfb3;
+    color: var(--text-primary);
     text-align: center;
     margin-top: 0;
-    margin-bottom: 38px;
-    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    font-size: clamp(2.1rem, 4vw, 2.6rem);
+    letter-spacing: 0.02em;
+}
+
+.container > p {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
 }
 
 .form-group {
-    margin-bottom: 26px;
+    margin-bottom: 1.75rem;
 }
 
 label {
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 0.65rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    color: #ffc373;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
 }
 
 textarea {
     width: 100%;
-    padding: 16px 18px;
-    border: 1px solid rgba(255, 149, 0, 0.45);
-    border-radius: 12px;
-    font-size: 16px;
-    min-height: 140px;
-    background: rgba(4, 2, 0, 0.9);
-    color: #fff1da;
-    box-shadow: inset 0 0 22px rgba(255, 135, 0, 0.07);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    min-height: 160px;
+    background: rgba(12, 13, 15, 0.85);
+    color: var(--text-primary);
+    resize: vertical;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea::placeholder {
+    color: rgba(197, 203, 212, 0.55);
 }
 
 textarea:focus {
     outline: none;
-    border-color: #ff8c1a;
-    box-shadow: 0 0 18px rgba(255, 117, 0, 0.35), inset 0 0 18px rgba(255, 117, 0, 0.15);
-    transform: translateY(-1px);
-}
-
-textarea::placeholder {
-    color: rgba(255, 207, 150, 0.55);
+    border-color: rgba(240, 127, 40, 0.65);
+    box-shadow: 0 0 0 3px rgba(240, 127, 40, 0.22);
 }
 
 .radio-group {
     display: flex;
-    gap: 20px;
+    gap: 1.1rem;
     flex-wrap: wrap;
 }
 
 .radio-group label {
+    position: relative;
     display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 500;
-    color: #ffe1bb;
-    padding: 4px;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+    margin: 0;
 }
 
 .radio-group input[type="radio"] {
-    accent-color: #ff8c1a;
-    width: 18px;
-    height: 18px;
-}
-
-.radio-group input[type="radio"]:focus-visible + span,
-.radio-group label:hover span {
-    border-color: rgba(255, 149, 0, 0.6);
-    background: rgba(255, 140, 26, 0.15);
-}
-
-.radio-group input[type="radio"]:checked + span {
-    color: #120400;
-    background: rgba(255, 145, 20, 0.85);
-    border-radius: 999px;
-    padding: 8px 16px;
-    box-shadow: 0 0 18px rgba(255, 140, 26, 0.35);
-}
-
-.radio-group label span {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 149, 0, 0.25);
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-button {
-    position: relative;
-    background: linear-gradient(140deg, #ffb347 0%, #ff8c1a 45%, #ff5f1f 100%);
-    color: #120400;
-    border: none;
-    padding: 14px 30px;
-    border-radius: 999px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-    box-shadow: 0 12px 25px rgba(255, 95, 31, 0.35);
-}
-
-button::after {
-    content: "";
     position: absolute;
-    inset: 4px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    opacity: 0.7;
+    inset: 0;
+    opacity: 0;
     pointer-events: none;
 }
 
+.radio-group span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 0.6rem 1.1rem 0.55rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    transition: border 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.radio-group span::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.22);
+    box-shadow: inset 0 0 0 2px transparent;
+    transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.radio-group label:hover span {
+    border-color: rgba(240, 127, 40, 0.25);
+    color: var(--text-primary);
+}
+
+.radio-group input[type="radio"]:checked + span {
+    background: rgba(240, 127, 40, 0.12);
+    border-color: rgba(240, 127, 40, 0.45);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 2px rgba(240, 127, 40, 0.2);
+}
+
+.radio-group input[type="radio"]:checked + span::before {
+    border-color: rgba(240, 127, 40, 0.75);
+    box-shadow: inset 0 0 0 4px rgba(240, 127, 40, 0.85);
+    background: rgba(240, 127, 40, 0.25);
+}
+
+button {
+    background: linear-gradient(135deg, var(--accent), #f28f3f);
+    color: #111;
+    border: none;
+    padding: 0.85rem 1.6rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    box-shadow: 0 10px 25px rgba(240, 127, 40, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
 button:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 16px 28px rgba(255, 120, 45, 0.45);
+    background: linear-gradient(135deg, var(--accent-hover), #ffb073);
+    transform: translateY(-1px);
+    box-shadow: 0 18px 35px rgba(240, 127, 40, 0.45);
 }
 
 button:active {
-    transform: translateY(0);
-    box-shadow: 0 10px 20px rgba(255, 120, 45, 0.35);
+    transform: translateY(1px);
 }
 
 .result {
-    margin-top: 32px;
-    padding: 22px 22px 26px;
-    background: rgba(12, 5, 0, 0.9);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 132, 0, 0.45);
-    box-shadow: inset 0 0 0 1px rgba(255, 132, 0, 0.15);
+    margin-top: 2.2rem;
+    padding: 1.5rem;
+    background: rgba(10, 11, 13, 0.75);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(240, 127, 40, 0.25);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
 .result h2 {
     margin-top: 0;
-    color: #ffc98b;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-size: 0.95rem;
-    margin-bottom: 14px;
+    margin-bottom: 1rem;
+    color: var(--accent-hover);
+    font-size: 1.25rem;
+    letter-spacing: 0.03em;
 }
 
 .converted-text {
-    padding: 16px 18px;
-    margin-bottom: 18px;
-    background: rgba(2, 0, 0, 0.9);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 140, 26, 0.45);
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-soft);
     white-space: pre-wrap;
-    font-family: "IBM Plex Mono", "Fira Code", "Courier New", monospace;
-    color: #ffe6c7;
-    box-shadow: inset 0 0 0 1px rgba(255, 149, 0, 0.15), 0 0 18px rgba(255, 120, 30, 0.25);
+    font-family: "Cascadia Mono", "Fira Code", monospace;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
-button.secondary {
-    background: transparent;
-    color: #ffb347;
-    border: 1px solid rgba(255, 140, 26, 0.45);
-    box-shadow: none;
-    letter-spacing: 0.1em;
-    padding: 12px 26px;
+.helper-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.6rem;
 }
 
-button.secondary:hover {
-    background: rgba(255, 140, 26, 0.12);
-    box-shadow: none;
-}
+@media (max-width: 640px) {
+    body {
+        padding: 24px 16px 48px;
+    }
 
-button.secondary::after {
-    display: none;
+    .container {
+        padding: 28px 1.35rem 32px;
+    }
+
+    .radio-group {
+        gap: 0.75rem;
+    }
+
+    button {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 #copy-popup {
     position: fixed;
-    top: 26px;
-    right: 26px;
-    background: rgba(18, 6, 0, 0.94);
-    color: #ffb347;
-    padding: 13px 24px;
-    border-radius: 999px;
+    top: 24px;
+    right: 24px;
+    background: rgba(240, 127, 40, 0.92);
+    color: #111;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
     display: none;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    box-shadow: 0 12px 30px rgba(255, 120, 45, 0.4);
-    border: 1px solid rgba(255, 149, 0, 0.45);
     z-index: 1000;
-}
-
-#copy-popup.show {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    font-weight: 600;
+    box-shadow: 0 12px 22px rgba(240, 127, 40, 0.35);
 }
 
 #copy-popup::after {
     content: "";
     position: absolute;
-    inset: -6px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 136, 0, 0.45);
-    opacity: 0.45;
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 32px 14px;
-    }
-
-    .container {
-        padding: 32px 22px 36px;
-    }
-
-    h1 {
-        letter-spacing: 0.24rem;
-    }
-
-    .radio-group {
-        gap: 14px;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    .result {
-        padding: 18px 18px 22px;
-    }
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    opacity: 0.25;
+    pointer-events: none;
 }

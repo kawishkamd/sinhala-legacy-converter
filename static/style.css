@@ -1,84 +1,290 @@
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: "IBM Plex Mono", "Fira Code", "Courier New", monospace;
+    line-height: 1.65;
     margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-    color: #333;
+    min-height: 100vh;
+    padding: 48px 24px;
+    background: radial-gradient(circle at 15% -10%, #ff7b00 0%, rgba(255, 123, 0, 0) 45%),
+                radial-gradient(circle at 85% 0%, #ffb347 0%, rgba(255, 179, 71, 0) 40%),
+                linear-gradient(135deg, #020202 0%, #090301 50%, #000000 100%);
+    color: #f9e6cb;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 108, 0, 0.06) 0, rgba(255, 108, 0, 0.06) 1px, transparent 1px, transparent 120px),
+        repeating-linear-gradient(0deg, rgba(255, 108, 0, 0.04) 0, rgba(255, 108, 0, 0.04) 1px, transparent 1px, transparent 120px);
+    mix-blend-mode: screen;
+    opacity: 0.6;
+    z-index: 0;
 }
 
 .container {
-    max-width: 800px;
+    position: relative;
+    max-width: 880px;
     margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: rgba(6, 3, 0, 0.8);
+    padding: 40px 36px 44px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 135, 0, 0.5);
+    box-shadow: 0 18px 60px rgba(255, 119, 0, 0.18), inset 0 0 0 1px rgba(255, 180, 90, 0.12);
+    backdrop-filter: blur(6px);
+    z-index: 1;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 14px;
+    border: 1px dashed rgba(255, 146, 0, 0.3);
+    pointer-events: none;
 }
 
 h1 {
-    color: #2c3e50;
+    color: #ffa94d;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.32rem;
+    margin: 0 0 12px;
+    font-size: clamp(1.9rem, 3vw, 2.4rem);
+    text-shadow: 0 0 12px rgba(255, 153, 0, 0.35);
+}
+
+p {
+    color: #ffdfb3;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 38px;
+    font-size: 1.05rem;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 26px;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #ffc373;
+    text-transform: uppercase;
+    font-size: 0.85rem;
 }
 
 textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 149, 0, 0.45);
+    border-radius: 12px;
     font-size: 16px;
-    min-height: 100px;
+    min-height: 140px;
+    background: rgba(4, 2, 0, 0.9);
+    color: #fff1da;
+    box-shadow: inset 0 0 22px rgba(255, 135, 0, 0.07);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #ff8c1a;
+    box-shadow: 0 0 18px rgba(255, 117, 0, 0.35), inset 0 0 18px rgba(255, 117, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+textarea::placeholder {
+    color: rgba(255, 207, 150, 0.55);
 }
 
 .radio-group {
     display: flex;
-    gap: 15px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .radio-group label {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-weight: normal;
+    gap: 10px;
+    font-weight: 500;
+    color: #ffe1bb;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.radio-group input[type="radio"] {
+    accent-color: #ff8c1a;
+    width: 18px;
+    height: 18px;
+}
+
+.radio-group input[type="radio"]:focus-visible + span,
+.radio-group label:hover span {
+    border-color: rgba(255, 149, 0, 0.6);
+    background: rgba(255, 140, 26, 0.15);
+}
+
+.radio-group input[type="radio"]:checked + span {
+    color: #120400;
+    background: rgba(255, 145, 20, 0.85);
+    border-radius: 999px;
+    padding: 8px 16px;
+    box-shadow: 0 0 18px rgba(255, 140, 26, 0.35);
+}
+
+.radio-group label span {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 149, 0, 0.25);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 button {
-    background-color: #3498db;
-    color: white;
+    position: relative;
+    background: linear-gradient(140deg, #ffb347 0%, #ff8c1a 45%, #ff5f1f 100%);
+    color: #120400;
     border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
+    padding: 14px 30px;
+    border-radius: 999px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 12px 25px rgba(255, 95, 31, 0.35);
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 button:hover {
-    background-color: #2980b9;
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 16px 28px rgba(255, 120, 45, 0.45);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 10px 20px rgba(255, 120, 45, 0.35);
 }
 
 .result {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    border-left: 4px solid #3498db;
+    margin-top: 32px;
+    padding: 22px 22px 26px;
+    background: rgba(12, 5, 0, 0.9);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 132, 0, 0.45);
+    box-shadow: inset 0 0 0 1px rgba(255, 132, 0, 0.15);
+}
+
+.result h2 {
+    margin-top: 0;
+    color: #ffc98b;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
 }
 
 .converted-text {
-    padding: 10px;
-    background-color: #eee;
-    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    background: rgba(2, 0, 0, 0.9);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 140, 26, 0.45);
     white-space: pre-wrap;
-    font-family: monospace;
-    margin-bottom: 10px;
+    font-family: "IBM Plex Mono", "Fira Code", "Courier New", monospace;
+    color: #ffe6c7;
+    box-shadow: inset 0 0 0 1px rgba(255, 149, 0, 0.15), 0 0 18px rgba(255, 120, 30, 0.25);
+}
+
+button.secondary {
+    background: transparent;
+    color: #ffb347;
+    border: 1px solid rgba(255, 140, 26, 0.45);
+    box-shadow: none;
+    letter-spacing: 0.1em;
+    padding: 12px 26px;
+}
+
+button.secondary:hover {
+    background: rgba(255, 140, 26, 0.12);
+    box-shadow: none;
+}
+
+button.secondary::after {
+    display: none;
+}
+
+#copy-popup {
+    position: fixed;
+    top: 26px;
+    right: 26px;
+    background: rgba(18, 6, 0, 0.94);
+    color: #ffb347;
+    padding: 13px 24px;
+    border-radius: 999px;
+    display: none;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    box-shadow: 0 12px 30px rgba(255, 120, 45, 0.4);
+    border: 1px solid rgba(255, 149, 0, 0.45);
+    z-index: 1000;
+}
+
+#copy-popup.show {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#copy-popup::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 136, 0, 0.45);
+    opacity: 0.45;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 32px 14px;
+    }
+
+    .container {
+        padding: 32px 22px 36px;
+    }
+
+    h1 {
+        letter-spacing: 0.24rem;
+    }
+
+    .radio-group {
+        gap: 14px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .result {
+        padding: 18px 18px 22px;
+    }
 }

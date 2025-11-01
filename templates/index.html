@@ -7,70 +7,63 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Sinhala Unicode Converter</h1>
-        <p>Convert Sinhala Unicode text to legacy font styles ('fm' and 'isi')</p>
-        
+    <main class="container">
+        <header>
+            <h1>Sinhala Unicode Converter</h1>
+            <p>Retro darkroom vibes with bright amber glyphs for your legacy Sinhala fonts.</p>
+        </header>
+
         <form method="POST">
             <div class="form-group">
-                <label for="text">Enter Sinhala Unicode Text:</label>
-                <textarea id="text" name="text" rows="5" required>{{ original_text if original_text else '' }}</textarea>
+                <label for="text">Enter Sinhala Unicode Text</label>
+                <textarea id="text" name="text" rows="5" required placeholder="e.g. සිංහල පෙළ ඇතුළත් කරන්න...">{{ original_text if original_text else '' }}</textarea>
             </div>
-            
+
             <div class="form-group">
-                <label>Conversion Style:</label>
+                <label>Conversion Style</label>
                 <div class="radio-group">
                     <label>
                         <input type="radio" name="style" value="fm" {% if style == 'fm' or not style %}checked{% endif %}>
-                        FM (FMMalithi)
+                        <span>FM (FMMalithi)</span>
                     </label>
                     <label>
                         <input type="radio" name="style" value="isi" {% if style == 'isi' %}checked{% endif %}>
-                        ISI (Island)
+                        <span>ISI (Island)</span>
                     </label>
                 </div>
             </div>
-            
+
             <button type="submit">Convert</button>
         </form>
-        
-        {% if converted_text %}
-        <div class="result">
-            <h2>Converted Text ({{ style|upper }}):</h2>
-            <div class="converted-text">{{ converted_text }}</div>
-            <button onclick="copyToClipboard()">Copy to Clipboard</button>
-        </div>
-        {% endif %}
-    </div>
 
-    <style>
-        #copy-popup {
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: #4CAF50;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 5px;
-          display: none;
-          z-index: 1000;
+        {% if converted_text %}
+        <section class="result" aria-live="polite">
+            <h2>Converted Text ({{ style|upper }})</h2>
+            <div class="converted-text">{{ converted_text }}</div>
+            <button class="secondary" type="button" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </section>
+        {% endif %}
+    </main>
+
+    <div id="copy-popup" role="status" aria-live="polite">⚡ Copied to clipboard!</div>
+
+    <script>
+    function copyToClipboard() {
+        const textElement = document.querySelector('.converted-text');
+        if (!textElement) {
+            return;
         }
-      </style>
-      
-      <div id="copy-popup">Copied to clipboard!</div>
-      
-      <script>
-      function copyToClipboard() {
-          const text = document.querySelector('.converted-text').textContent;
-          navigator.clipboard.writeText(text).then(() => {
-              const popup = document.getElementById('copy-popup');
-              popup.style.display = 'block';
-              setTimeout(() => {
-                  popup.style.display = 'none';
-              }, 1500); // auto-close after 1.5 seconds
-          });
-      }
-      </script>
-      
+
+        const text = textElement.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const popup = document.getElementById('copy-popup');
+            popup.classList.add('show');
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 1500);
+        });
+    }
+    </script>
+
 </body>
 </html>

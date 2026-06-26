@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import json
 
 app = Flask(__name__)
@@ -46,17 +46,13 @@ def convert_text(text, style):
     
     return ''.join(converted_text)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if request.method == 'POST':
-        text = request.form['text']
-        style = request.form['style']
-        converted = convert_text(text, style)
-        return render_template('index.html', 
-                            original_text=text, 
-                            converted_text=converted,
-                            style=style)
-    return render_template('index.html')
+    return send_from_directory('.', 'index.html')
+
+@app.route('/data_list.json')
+def data_list():
+    return send_from_directory('.', 'data_list.json')
 
 @app.route('/api/convert', methods=['POST'])
 def api_convert():

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinhala Unicode Converter</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sinhala Unicode Converter</h1>
+        <p>Convert Sinhala Unicode text into legacy font formats inspired by classic desktop tooling.</p>
+
+        <form id="converter-form">
+            <div class="form-group">
+                <label for="text">Enter Sinhala Unicode Text</label>
+                <textarea id="text" name="text" rows="5" required placeholder="ඔබගේ සිංහල යුනිකෝඩ් පෙළ මෙහි ඇතුළත් කරන්න..."></textarea>
+                <div class="helper-text">Tip: Paste or type your Unicode content above and pick a target legacy encoding style.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Conversion Style</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="style" value="fm" checked>
+                        <span>FM (FMMalithi)</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="style" value="isi">
+                        <span>ISI (Island)</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit">Convert Text</button>
+        </form>
+
+        <div class="result" id="result-container" style="display: none;">
+            <h2 id="result-title">Converted Text</h2>
+            <div class="converted-text" id="converted-text"></div>
+            <button type="button" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <div id="copy-popup" role="status" aria-live="polite">Copied to clipboard!</div>
+
+    <script>
+    let unicodeToFm = {};
+    let unicodeToIsi = {};
+    let initialized = false;
+
+    // Fetch mappings asynchronously
+    fetch('data_list.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(item => {
+                if (item.uni && item.fm) unicodeToFm[item.uni] = item.fm;
+                if (item.uni && item.isi) unicodeToIsi[item.uni] = item.isi;
+            });
+            initialized = true;
+        })
+        .catch(err => {
+            console.error('Failed to load mapping database:', err);
+        });
+
+    function convertText(text, style) {
+        if (!initialized) return "Error: Mapping data not loaded yet. Please try again in a moment.";
+        const mapping = style === 'fm' ? unicodeToFm : unicodeToIsi;
+        const converted = [];
+        let i = 0;
+        const n = text.length;
+
+        while (i < n) {
+            let matched = false;
+            for (let l = 4; l > 0; l--) {
+                if (i + l <= n) {
+                    const substr = text.substring(i, i + l);
+                    if (substr in mapping) {
+                        converted.push(mapping[substr]);
+                        i += l;
+                        matched = true;
+                        break;
+                    }
+                }
+            }
+            if (!matched) {
+                converted.push(text[i]);
+                i += 1;
+            }
+        }
+        return converted.join('');
+    }
+
+    document.getElementById('converter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = document.getElementById('text').value;
+        const style = document.querySelector('input[name="style"]:checked').value;
+        const result = convertText(text, style);
+
+        document.getElementById('converted-text').textContent = result;
+        document.getElementById('result-title').textContent = `Converted Text (${style.toUpperCase()})`;
+        document.getElementById('result-container').style.display = 'block';
+    });
+
+    function copyToClipboard() {
+        const text = document.getElementById('converted-text').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const popup = document.getElementById('copy-popup');
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 1500);
+        });
+    }
+    </script>
+</body>
+</html>
